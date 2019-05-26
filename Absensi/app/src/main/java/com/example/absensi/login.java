@@ -22,6 +22,7 @@ public class login<TAG> extends AppCompatActivity {
     int success;
     ConnectivityManager conMgr;
 
+    private String url = Server.URL + "login.php";
 
     private static final String TAG = login.class.getSimpleName();
 
@@ -31,6 +32,7 @@ public class login<TAG> extends AppCompatActivity {
     public final static String TAG_USERNAME ="username";
     public final static String TAG_ID ="id";
 
+    String tag_json_obj "json_obj_req";
     SharedPreferences sharedPreferences;
     Boolean session = false;
     String id, username;
@@ -84,8 +86,13 @@ public class login<TAG> extends AppCompatActivity {
                     if (conMgr.getActiveNetworkInfo() !=null
                             && conMgr.getActiveNetworkInfo().isAvailable()
                             && conMgr.getActiveNetworkInfo().isAvailable()){
-                        checklogin(username,password);
+                        checklogin(username, password);
+                    }else {
+                        Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
                     }
+                    }else{
+                        //prompt user to enter credentials
+                        Toast.makeText(getApplicationContext(),"Kolom tidak boleh kosong", Toast.LENGTH_LONG).show();
                 }
 
             }
