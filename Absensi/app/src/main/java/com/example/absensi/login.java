@@ -8,6 +8,7 @@ import android.net.ConnectivityManager;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -21,7 +22,6 @@ public class login<TAG> extends AppCompatActivity {
     int success;
     ConnectivityManager conMgr;
 
-    private String url = Server.URL + "login.php";
 
     private static final String TAG = login.class.getSimpleName();
 
@@ -31,7 +31,6 @@ public class login<TAG> extends AppCompatActivity {
     public final static String TAG_USERNAME ="username";
     public final static String TAG_ID ="id";
 
-    String tag_json_obj "json_obj_req";
     SharedPreferences sharedPreferences;
     Boolean session = false;
     String id, username;
@@ -60,6 +59,36 @@ public class login<TAG> extends AppCompatActivity {
         txt_password = (EditText) findViewById(R.id.txt_password);
 
         //Cek session login jika TRUE maka langsung MainActivity
-        sharedPreferences = getSharedPreferences(my_shared_preferences,)
+        sharedPreferences = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
+        session = sharedPreferences.getBoolean(session_status,false);
+        id = sharedPreferences.getString(TAG_ID,null);
+        username = sharedPreferences.getString(TAG_USERNAME,null);
+
+        if (session){
+            Intent intent = new Intent(login.this,MainAActivity.class);
+            Intent.putExtra(TAG_ID,id);
+            Intent.putExtra(TAG_USERNAME, username);
+            finish();
+            startActivity(intent);
+        }
+
+        btn_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO Auto-generated method stub
+                String username = txt_username.getText().toString();
+                String password = txt_password.getText().toString();
+
+                // mengecek kolom yang kosong
+                if (username.trim().length() > 0 && password.trim().length() > 0){
+                    if (conMgr.getActiveNetworkInfo() !=null
+                            && conMgr.getActiveNetworkInfo().isAvailable()
+                            && conMgr.getActiveNetworkInfo().isAvailable()){
+                        checklogin(username,password);
+                    }
+                }
+
+            }
+        });
     }
 }
