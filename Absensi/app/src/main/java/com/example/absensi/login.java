@@ -93,7 +93,7 @@ public class login<TAG> extends AppCompatActivity {
                     }else{
                         //prompt user to enter credentials
                         Toast.makeText(getApplicationContext(),"Kolom tidak boleh kosong", Toast.LENGTH_LONG).show();
-                }
+                }else
 
             }
         });
